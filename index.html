@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מעקב אימון אקורדיון</title>
+    <title>מעקב אימון אקורדיון מתקדם</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#32808d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="אקורדיון">
 </head>
 <body>
     <div class="app">
         <!-- Header -->
         <header class="header">
-            <h1>🪗 אימון אקורדיון</h1>
+            <h1>🪗 אימון אקורדיון מתקדם</h1>
         </header>
 
         <!-- Navigation -->
@@ -18,10 +23,6 @@
             <button class="nav-btn nav-btn--active" data-tab="practice">
                 <span class="nav-icon">📝</span>
                 אימון יומי
-            </button>
-            <button class="nav-btn" data-tab="metronome">
-                <span class="nav-icon">🎵</span>
-                מטרונום
             </button>
             <button class="nav-btn" data-tab="progress">
                 <span class="nav-icon">📈</span>
@@ -40,7 +41,31 @@
                 <div class="section">
                     <h2>אימון יומי</h2>
                     <p class="section-subtitle">תאריך: <span id="current-date"></span></p>
-                    
+
+                    <!-- Metronome Section -->
+                    <div class="metronome-section">
+                        <h3>מטרונום</h3>
+                        <div class="metronome-controls">
+                            <div class="bpm-display">
+                                <span id="bpm-value">120</span>
+                                <small>BPM</small>
+                            </div>
+                            <div class="metronome-buttons">
+                                <button id="bpm-minus" class="bpm-btn">-3</button>
+                                <button id="metronome-toggle" class="metronome-toggle">▶️</button>
+                                <button id="bpm-plus" class="bpm-btn">+3</button>
+                            </div>
+                            <div class="tempo-controls" style="display: none;" id="tempo-controls">
+                                <button id="slower-btn" class="tempo-btn slower">איטי לי</button>
+                                <button id="faster-btn" class="tempo-btn faster">מהר לי</button>
+                            </div>
+                        </div>
+                        <div class="metronome-visual" id="metronome-visual">
+                            <div class="beat-indicator"></div>
+                        </div>
+                    </div>
+
+                    <!-- Exercises List -->
                     <div class="exercises-list" id="exercises-list">
                         <!-- Exercises will be dynamically populated -->
                     </div>
@@ -52,62 +77,14 @@
                 </div>
             </div>
 
-            <!-- Metronome Tab -->
-            <div id="metronome" class="tab-content">
-                <div class="section">
-                    <h2>מטרונום</h2>
-                    
-                    <div class="metronome-container">
-                        <div class="bpm-display">
-                            <span id="bpm-value">120</span>
-                            <small>BPM</small>
-                        </div>
-                        
-                        <div class="bpm-controls">
-                            <button class="btn btn--secondary btn-round" id="bpm-minus">−</button>
-                            <button class="btn btn--secondary btn-round" id="bpm-plus">+</button>
-                        </div>
-
-                        <button class="btn btn--primary btn--lg metronome-btn" id="metronome-toggle">
-                            <span id="metronome-text">הפעל</span>
-                        </button>
-
-                        <div class="metronome-visual" id="metronome-visual"></div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Progress Tab -->
             <div id="progress" class="tab-content">
                 <div class="section">
                     <h2>מעקב התקדמות</h2>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" id="total-sessions">0</div>
-                            <div class="stat-label">סה"כ אימונים</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="weekly-completion">0%</div>
-                            <div class="stat-label">השלמה שבועית</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="avg-bpm">0</div>
-                            <div class="stat-label">ממוצע BPM</div>
-                        </div>
+                    <div class="progress-stats" id="progress-stats">
+                        <!-- Progress stats will be populated -->
                     </div>
-
-                    <div class="progress-chart-container">
-                        <h3>התקדמות BPM</h3>
-                        <canvas id="progress-chart" style="position: relative; height: 300px;"></canvas>
-                    </div>
-
-                    <div class="sessions-log">
-                        <h3>יומן אימונים</h3>
-                        <div id="sessions-list">
-                            <!-- Sessions will be populated here -->
-                        </div>
-                    </div>
+                    <canvas id="progress-chart" width="300" height="200"></canvas>
                 </div>
             </div>
 
@@ -115,69 +92,78 @@
             <div id="settings" class="tab-content">
                 <div class="section">
                     <h2>הגדרות</h2>
-                    
-                    <div class="settings-group">
-                        <h3>תרגילים</h3>
-                        <div id="exercises-settings">
-                            <!-- Exercise settings will be populated here -->
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">הוספת תרגיל חדש</label>
-                            <input type="text" class="form-control" id="new-exercise-name" placeholder="שם התרגיל">
-                            <input type="number" class="form-control" id="new-exercise-duration" placeholder="זמן בדקות" min="1" max="60">
-                            <button class="btn btn--primary" id="add-exercise-btn">הוסף תרגיל</button>
-                        </div>
+
+                    <div class="setting-group">
+                        <h3>הגדרות מטרונום</h3>
+                        <label>צליל מטרונום:</label>
+                        <select id="metronome-sound">
+                            <option value="click">קליק</option>
+                            <option value="beep">ביפ</option>
+                            <option value="tick">טיק</option>
+                            <option value="wood">עץ</option>
+                        </select>
+
+                        <label>עוצמת קול:</label>
+                        <input type="range" id="volume-slider" min="0" max="100" value="70">
+                        <span id="volume-value">70%</span>
+
+                        <label>שלבי BPM:</label>
+                        <select id="bpm-steps">
+                            <option value="1">1 BPM</option>
+                            <option value="3" selected>3 BPM</option>
+                            <option value="5">5 BPM</option>
+                            <option value="10">10 BPM</option>
+                        </select>
                     </div>
 
-                    <div class="settings-group">
-                        <h3>נתונים</h3>
-                        <button class="btn btn--outline" id="export-data-btn">יצוא נתונים</button>
-                        <button class="btn btn--outline btn--danger" id="reset-data-btn">איפוס נתונים</button>
+                    <div class="setting-group">
+                        <h3>הגדרות כלליות</h3>
+                        <label>
+                            <input type="checkbox" id="auto-increase-bpm">
+                            העלאה אוטומטית של BPM
+                        </label>
+                        <label>
+                            <input type="checkbox" id="vibrate-mode">
+                            רטט במקום צליל
+                        </label>
                     </div>
+
+                    <button id="reset-data" class="btn btn--danger">איפוס נתונים</button>
                 </div>
             </div>
         </main>
-
-        <!-- Exercise Modal -->
-        <div class="modal hidden" id="exercise-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 id="modal-exercise-name"></h3>
-                    <button class="modal-close" id="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="timer-display">
-                        <span id="timer-minutes">00</span>:<span id="timer-seconds">00</span>
-                    </div>
-                    
-                    <div class="timer-controls">
-                        <button class="btn btn--primary" id="start-timer">התחל</button>
-                        <button class="btn btn--secondary" id="pause-timer">השהה</button>
-                        <button class="btn btn--outline" id="reset-timer">איפוס</button>
-                    </div>
-
-                    <div class="exercise-inputs">
-                        <div class="form-group">
-                            <label class="form-label">BPM שהושג</label>
-                            <input type="number" class="form-control" id="achieved-bpm" min="40" max="300">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">הערות</label>
-                            <textarea class="form-control" id="exercise-notes" rows="3" placeholder="הערות על האימון..."></textarea>
-                        </div>
-                    </div>
-
-                    <button class="btn btn--primary btn--full-width" id="complete-exercise">סיום תרגיל</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Overlay -->
-        <div class="overlay hidden" id="overlay"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <h3>איך היה התרגיל?</h3>
+            <p>האם המהירות הייתה מתאימה?</p>
+            <div class="modal-buttons">
+                <button id="feedback-good" class="btn btn--success">כן, היה טוב</button>
+                <button id="feedback-ok" class="btn btn--neutral">בסדר</button>
+                <button id="feedback-hard" class="btn btn--warning">היה קשה</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Exercise Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3>עריכת תרגיל</h3>
+            <label>שם התרגיל:</label>
+            <input type="text" id="edit-name" placeholder="שם התרגיל">
+            <label>זמן (דקות):</label>
+            <input type="number" id="edit-duration" min="1" max="60">
+            <label>תיאור:</label>
+            <textarea id="edit-description" rows="3"></textarea>
+            <div class="modal-buttons">
+                <button id="save-exercise" class="btn btn--success">שמור</button>
+                <button id="cancel-edit" class="btn btn--neutral">בטל</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>

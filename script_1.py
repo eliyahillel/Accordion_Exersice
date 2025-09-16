@@ -1,4 +1,181 @@
-/* Global Styles */
+# יצירת הקוד המעודכן של האפליקציה עם כל השיפורים
+html_content = '''<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מעקב אימון אקורדיון מתקדם</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#32808d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="אקורדיון">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <h1>🪗 אימון אקורדיון מתקדם</h1>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn nav-btn--active" data-tab="practice">
+                <span class="nav-icon">📝</span>
+                אימון יומי
+            </button>
+            <button class="nav-btn" data-tab="progress">
+                <span class="nav-icon">📈</span>
+                התקדמות
+            </button>
+            <button class="nav-btn" data-tab="settings">
+                <span class="nav-icon">⚙️</span>
+                הגדרות
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Daily Practice Tab -->
+            <div id="practice" class="tab-content tab-content--active">
+                <div class="section">
+                    <h2>אימון יומי</h2>
+                    <p class="section-subtitle">תאריך: <span id="current-date"></span></p>
+                    
+                    <!-- Metronome Section -->
+                    <div class="metronome-section">
+                        <h3>מטרונום</h3>
+                        <div class="metronome-controls">
+                            <div class="bpm-display">
+                                <span id="bpm-value">120</span>
+                                <small>BPM</small>
+                            </div>
+                            <div class="metronome-buttons">
+                                <button id="bpm-minus" class="bpm-btn">-3</button>
+                                <button id="metronome-toggle" class="metronome-toggle">▶️</button>
+                                <button id="bpm-plus" class="bpm-btn">+3</button>
+                            </div>
+                            <div class="tempo-controls" style="display: none;" id="tempo-controls">
+                                <button id="slower-btn" class="tempo-btn slower">איטי לי</button>
+                                <button id="faster-btn" class="tempo-btn faster">מהר לי</button>
+                            </div>
+                        </div>
+                        <div class="metronome-visual" id="metronome-visual">
+                            <div class="beat-indicator"></div>
+                        </div>
+                    </div>
+
+                    <!-- Exercises List -->
+                    <div class="exercises-list" id="exercises-list">
+                        <!-- Exercises will be dynamically populated -->
+                    </div>
+
+                    <div class="daily-tip">
+                        <h3>💡 טיפ היום</h3>
+                        <p id="daily-tip-text"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tab -->
+            <div id="progress" class="tab-content">
+                <div class="section">
+                    <h2>מעקב התקדמות</h2>
+                    <div class="progress-stats" id="progress-stats">
+                        <!-- Progress stats will be populated -->
+                    </div>
+                    <canvas id="progress-chart" width="300" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <div class="section">
+                    <h2>הגדרות</h2>
+                    
+                    <div class="setting-group">
+                        <h3>הגדרות מטרונום</h3>
+                        <label>צליל מטרונום:</label>
+                        <select id="metronome-sound">
+                            <option value="click">קליק</option>
+                            <option value="beep">ביפ</option>
+                            <option value="tick">טיק</option>
+                            <option value="wood">עץ</option>
+                        </select>
+                        
+                        <label>עוצמת קול:</label>
+                        <input type="range" id="volume-slider" min="0" max="100" value="70">
+                        <span id="volume-value">70%</span>
+                        
+                        <label>שלבי BPM:</label>
+                        <select id="bpm-steps">
+                            <option value="1">1 BPM</option>
+                            <option value="3" selected>3 BPM</option>
+                            <option value="5">5 BPM</option>
+                            <option value="10">10 BPM</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>הגדרות כלליות</h3>
+                        <label>
+                            <input type="checkbox" id="auto-increase-bpm">
+                            העלאה אוטומטית של BPM
+                        </label>
+                        <label>
+                            <input type="checkbox" id="vibrate-mode">
+                            רטט במקום צליל
+                        </label>
+                    </div>
+
+                    <button id="reset-data" class="btn btn--danger">איפוס נתונים</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <h3>איך היה התרגיל?</h3>
+            <p>האם המהירות הייתה מתאימה?</p>
+            <div class="modal-buttons">
+                <button id="feedback-good" class="btn btn--success">כן, היה טוב</button>
+                <button id="feedback-ok" class="btn btn--neutral">בסדר</button>
+                <button id="feedback-hard" class="btn btn--warning">היה קשה</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Exercise Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3>עריכת תרגיל</h3>
+            <label>שם התרגיל:</label>
+            <input type="text" id="edit-name" placeholder="שם התרגיל">
+            <label>זמן (דקות):</label>
+            <input type="number" id="edit-duration" min="1" max="60">
+            <label>תיאור:</label>
+            <textarea id="edit-description" rows="3"></textarea>
+            <div class="modal-buttons">
+                <button id="save-exercise" class="btn btn--success">שמור</button>
+                <button id="cancel-edit" class="btn btn--neutral">בטל</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>'''
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("נוצר index.html מעודכן")
+
+# יצירת CSS מעודכן
+css_content = '''/* Global Styles */
 :root {
     --primary: #32808d;
     --primary-light: #4a9fb0;
@@ -613,34 +790,34 @@ body {
     .header h1 {
         font-size: 1.3rem;
     }
-
+    
     .nav-btn {
         font-size: 0.8rem;
         padding: 0.75rem 0.25rem;
     }
-
+    
     .nav-icon {
         font-size: 1rem;
     }
-
+    
     .main {
         padding: 0.75rem;
     }
-
+    
     .bpm-display {
         font-size: 2.5rem;
     }
-
+    
     .metronome-toggle {
         width: 70px;
         height: 70px;
         font-size: 1.5rem;
     }
-
+    
     .modal-buttons {
         flex-direction: column;
     }
-
+    
     .btn {
         padding: 0.75rem 1rem;
         font-size: 0.85rem;
@@ -654,18 +831,18 @@ body {
         align-items: center;
         justify-content: center;
     }
-
+    
     .btn {
         -moz-appearance: none;
     }
-
+    
     input[type="range"] {
         -moz-appearance: none;
         background: var(--border);
         height: 8px;
         border-radius: 4px;
     }
-
+    
     input[type="range"]::-moz-range-thumb {
         background: var(--primary);
         border: none;
@@ -691,7 +868,7 @@ body {
         --border: #000;
         --text-light: #333;
     }
-
+    
     .btn {
         border: 2px solid currentColor;
     }
@@ -706,4 +883,9 @@ body {
         --text-light: #b0b0b0;
         --border: #333;
     }
-}
+}'''
+
+with open('style.css', 'w', encoding='utf-8') as f:
+    f.write(css_content)
+
+print("נוצר style.css מעודכן")

@@ -1,0 +1,28 @@
+{
+  "name": "אימון אקורדיון מתקדם",
+  "short_name": "אקורדיון",
+  "description": "אפליקציה לאימון אקורדיון עם מטרונום ומעקב התקדמות",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fffe",
+  "theme_color": "#32808d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "music",
+    "education"
+  ],
+  "lang": "he",
+  "dir": "rtl"
+}
