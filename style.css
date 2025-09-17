@@ -1,709 +1,185 @@
-/* Global Styles */
-:root {
-    --primary: #32808d;
-    --primary-light: #4a9fb0;
-    --primary-dark: #26626c;
-    --secondary: #f8fffe;
-    --accent: #e67e44;
-    --success: #4caf50;
-    --warning: #ff9800;
-    --danger: #f44336;
-    --text: #333;
-    --text-light: #666;
-    --bg: #fafafa;
-    --white: #ffffff;
-    --border: #e0e0e0;
-    --shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.app {
-    max-width: 500px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background: var(--white);
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Header */
-.header {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: var(--white);
-    padding: 1rem;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.header h1 {
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-/* Navigation */
-.nav {
-    display: flex;
-    background: var(--white);
-    border-bottom: 2px solid var(--border);
-    position: sticky;
-    top: 4rem;
-    z-index: 90;
-}
-
-.nav-btn {
-    flex: 1;
-    padding: 1rem 0.5rem;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.nav-btn:hover {
-    background: var(--secondary);
-}
-
-.nav-btn--active {
-    background: var(--primary);
-    color: var(--white);
-}
-
-.nav-icon {
-    font-size: 1.2rem;
-}
-
-/* Main Content */
-.main {
-    flex: 1;
-    padding: 1rem;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content--active {
-    display: block;
-}
-
-.section {
-    margin-bottom: 2rem;
-}
-
-.section h2 {
-    margin-bottom: 1rem;
-    color: var(--primary);
-    font-size: 1.5rem;
-}
-
-.section-subtitle {
-    color: var(--text-light);
-    margin-bottom: 1.5rem;
-}
-
-/* Metronome Section */
-.metronome-section {
-    background: var(--white);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: var(--shadow);
-}
-
-.metronome-section h3 {
-    margin-bottom: 1rem;
-    color: var(--primary);
-    text-align: center;
-}
-
-.metronome-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.bpm-display {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--primary);
-    line-height: 1;
-}
-
-.bpm-display small {
-    display: block;
-    font-size: 1rem;
-    font-weight: normal;
-    color: var(--text-light);
-}
-
-.metronome-buttons {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.bpm-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid var(--primary);
-    background: var(--white);
-    color: var(--primary);
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.bpm-btn:hover {
-    background: var(--primary);
-    color: var(--white);
-}
-
-.bpm-btn:active {
-    transform: scale(0.95);
-}
-
-.metronome-toggle {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: none;
-    background: var(--primary);
-    color: var(--white);
-    font-size: 2rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: var(--shadow);
-}
-
-.metronome-toggle:hover {
-    background: var(--primary-dark);
-    transform: scale(1.05);
-}
-
-.metronome-toggle.playing {
-    background: var(--danger);
-}
-
-.tempo-controls {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.tempo-btn {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid var(--accent);
-    background: var(--white);
-    color: var(--accent);
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.tempo-btn:hover {
-    background: var(--accent);
-    color: var(--white);
-}
-
-.tempo-btn.slower {
-    border-color: var(--warning);
-    color: var(--warning);
-}
-
-.tempo-btn.slower:hover {
-    background: var(--warning);
-    color: var(--white);
-}
-
-.metronome-visual {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.beat-indicator {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--border);
-    margin: 0 auto;
-    transition: all 0.1s;
-}
-
-.beat-indicator.active {
-    background: var(--primary);
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(50, 128, 141, 0.5);
-}
-
-/* Exercises */
-.exercises-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.exercise-card {
-    background: var(--white);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: var(--shadow);
-    transition: all 0.2s;
-}
-
-.exercise-card:hover {
-    border-color: var(--primary);
-}
-
-.exercise-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.exercise-name {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--text);
-}
-
-.exercise-duration {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-.exercise-description {
-    color: var(--text-light);
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-}
-
-.exercise-controls {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 0.9rem;
-}
-
-.btn--primary {
-    background: var(--primary);
-    color: var(--white);
-}
-
-.btn--primary:hover {
-    background: var(--primary-dark);
-}
-
-.btn--success {
-    background: var(--success);
-    color: var(--white);
-}
-
-.btn--success:hover {
-    background: #45a049;
-}
-
-.btn--warning {
-    background: var(--warning);
-    color: var(--white);
-}
-
-.btn--warning:hover {
-    background: #e68900;
-}
-
-.btn--danger {
-    background: var(--danger);
-    color: var(--white);
-}
-
-.btn--danger:hover {
-    background: #d32f2f;
-}
-
-.btn--neutral {
-    background: var(--border);
-    color: var(--text);
-}
-
-.btn--neutral:hover {
-    background: #d0d0d0;
-}
-
-.btn-icon {
-    padding: 0.5rem;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid var(--text-light);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-icon:hover {
-    border-color: var(--primary);
-    background: var(--primary);
-    color: var(--white);
-}
-
-.exercise-timer {
-    background: var(--secondary);
-    padding: 1rem;
-    border-radius: 8px;
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.timer-display {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-}
-
-.exercise-notes {
-    margin-top: 1rem;
-}
-
-.exercise-notes textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    resize: vertical;
-    min-height: 60px;
-    font-family: inherit;
-}
-
-.exercise-notes textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-.bpm-input {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.bpm-input input {
-    width: 80px;
-    padding: 0.5rem;
-    border: 2px solid var(--border);
-    border-radius: 6px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.bpm-input input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-/* Daily Tip */
-.daily-tip {
-    background: linear-gradient(135deg, var(--accent), #ff8c42);
-    color: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.daily-tip h3 {
-    margin-bottom: 0.5rem;
-}
-
-/* Progress */
-.progress-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.stat-card {
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: var(--shadow);
-    border: 2px solid var(--border);
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary);
-}
-
-.stat-label {
-    color: var(--text-light);
-    margin-top: 0.5rem;
-}
-
-#progress-chart {
-    width: 100%;
-    height: auto;
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    background: var(--white);
-}
-
-/* Settings */
-.setting-group {
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    box-shadow: var(--shadow);
-    border: 2px solid var(--border);
-}
-
-.setting-group h3 {
-    margin-bottom: 1rem;
-    color: var(--primary);
-}
-
-.setting-group label {
-    display: block;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    color: var(--text);
-}
-
-.setting-group input,
-.setting-group select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-}
-
-.setting-group input[type="checkbox"] {
-    width: auto;
-    margin-right: 0.5rem;
-    transform: scale(1.2);
-}
-
-.setting-group input[type="range"] {
-    width: 70%;
-    margin-right: 1rem;
-}
-
-#volume-value {
-    font-weight: bold;
-    color: var(--primary);
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-content {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    box-shadow: var(--shadow);
-}
-
-.modal-content h3 {
-    margin-bottom: 1rem;
-    color: var(--primary);
-}
-
-.modal-content p {
-    margin-bottom: 1.5rem;
-    color: var(--text-light);
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.modal-content label {
-    display: block;
-    text-align: right;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.modal-content input,
-.modal-content textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    margin-top: 0.25rem;
-}
-
-.modal-content input:focus,
-.modal-content textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-/* Mobile Responsive */
-@media (max-width: 480px) {
-    .header h1 {
-        font-size: 1.3rem;
-    }
-
-    .nav-btn {
-        font-size: 0.8rem;
-        padding: 0.75rem 0.25rem;
-    }
-
-    .nav-icon {
-        font-size: 1rem;
-    }
-
-    .main {
-        padding: 0.75rem;
-    }
-
-    .bpm-display {
-        font-size: 2.5rem;
-    }
-
-    .metronome-toggle {
-        width: 70px;
-        height: 70px;
-        font-size: 1.5rem;
-    }
-
-    .modal-buttons {
-        flex-direction: column;
-    }
-
-    .btn {
-        padding: 0.75rem 1rem;
-        font-size: 0.85rem;
-    }
-}
-
-/* Firefox specific fixes */
-@-moz-document url-prefix() {
-    .metronome-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .btn {
-        -moz-appearance: none;
-    }
-
-    input[type="range"] {
-        -moz-appearance: none;
-        background: var(--border);
-        height: 8px;
-        border-radius: 4px;
-    }
-
-    input[type="range"]::-moz-range-thumb {
-        background: var(--primary);
-        border: none;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-    }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* High contrast mode */
-@media (prefers-contrast: high) {
-    :root {
-        --border: #000;
-        --text-light: #333;
-    }
-
-    .btn {
-        border: 2px solid currentColor;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #121212;
-        --white: #1e1e1e;
-        --text: #e0e0e0;
-        --text-light: #b0b0b0;
-        --border: #333;
-    }
+:root{
+  --bg:#0d1117;--surface:#111827;--surface-2:#0f172a;--border:#263241;
+  --primary:#1f6feb;--primary-2:#1856bb;--accent:#ffd166;--text:#e6edf3;--muted:#9aa4b2;
+  --danger:#e74c3c;--success:#27ae60;--warning:#f39c12
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Segoe UI,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);direction:rtl;overflow-x:hidden}
+
+/* מטרונום קבוע וגדול */
+.fixed-metronome{
+  position:fixed;top:0;left:0;right:0;height:96px;
+  background:linear-gradient(180deg,var(--surface),var(--surface-2));
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  padding:0 16px;z-index:1000;
+  box-shadow:0 6px 18px rgba(0,0,0,.35)
+}
+.metronome-controls{display:flex;align-items:center;gap:16px;width:100%;max-width:980px}
+
+/* חיווי צדדי אופציונלי (ללא אנימציה) */
+.metronome-visual{width:36px;height:36px;display:flex;align-items:center;justify-content:center}
+.beat-circle{width:14px;height:14px;border-radius:50%;background:#dbe6ff;opacity:.6}
+
+/* עטיפת הסליידר + הבטחת רוחב מלא */
+.slider-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+  flex:1;
+  min-width:0;
+  height:32px;     /* מרווח אנכי נוח */
+}
+.slider-wrap .bpm-slider{
+  flex:1;
+  width:100%;
+  min-width:0;
+  z-index:1;
+}
+
+/* פס הסליידר */
+.bpm-slider{
+  height:12px;border-radius:6px;
+  background:rgba(255,255,255,.15);
+  outline:none;-webkit-appearance:none;appearance:none;
+  direction:ltr;position:relative;
+}
+
+/* אגודל (WebKit) */
+.bpm-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:28px;height:28px;border-radius:50%;
+  background:#fff;cursor:pointer;border:3px solid var(--primary);
+  box-shadow:0 2px 6px rgba(0,0,0,.35)
+}
+/* אגודל (Firefox) */
+.bpm-slider::-moz-range-thumb{
+  width:28px;height:28px;border-radius:50%;
+  background:#fff;border:3px solid var(--primary);cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.35)
+}
+
+/* שכבת האנימציה מעל האגודל – מונעת קונפליקט עם thumb */
+.thumb-overlay{
+  position:absolute;top:50%;
+  transform:translate(-50%,-50%) scale(1);
+  width:28px;height:28px;border-radius:50%;
+  pointer-events:none;background:transparent;
+  box-shadow:0 0 0 rgba(255,255,255,0);
+  z-index:2;
+}
+.thumb-overlay.pulse{ animation: thumbPulse .26s cubic-bezier(.2,.7,.2,1) forwards; }
+.thumb-overlay.accent{ box-shadow:0 0 14px rgba(255,209,102,.85), inset 0 0 0 3px var(--accent); }
+
+@keyframes thumbPulse{
+  0%{   transform:translate(-50%,-50%) scale(1); }
+  60%{  transform:translate(-50%,-50%) scale(1.45); }
+  100%{ transform:translate(-50%,-50%) scale(1); }
+}
+
+/* טקסט BPM וכפתור הפעלה */
+.bpm-display{min-width:96px;text-align:center;font-weight:700;font-size:1.1rem;color:#dbe6ff}
+.metronome-toggle{
+  width:56px;height:56px;border-radius:50%;
+  font-size:1.5rem;border:2px solid var(--primary);
+  background:transparent;color:#dbe6ff;cursor:pointer;
+  transition:transform .15s ease,background .2s ease,border-color .2s ease
+}
+.metronome-toggle:hover{transform:scale(1.05)}
+.metronome-toggle.playing{background:var(--primary);border-color:var(--primary)}
+.time-signature-select{
+  background:#0b1220;color:var(--text);border:1px solid var(--border);
+  border-radius:8px;padding:8px 10px;font-size:.95rem;outline:none
+}
+
+/* פריסת עמוד */
+.main{margin-top:108px;padding-bottom:86px;min-height:calc(100vh - 194px)}
+.section{padding:20px 16px;max-width:1200px;margin:0 auto}
+
+/* כרטיסי תרגילים */
+.exercises-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.exercise-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:18px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease
+}
+.exercise-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.35);border-color:#2d3b4f}
+.exercise-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.exercise-name{font-size:1.2rem;font-weight:700;color:#dbe6ff}
+.exercise-edit{background:none;border:none;font-size:1.2rem;color:var(--accent);cursor:pointer}
+.exercise-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.exercise-duration,.exercise-bpm{
+  background:#0b1220;border:1px solid var(--border);border-radius:8px;
+  text-align:center;padding:8px;font-weight:700;color:#c6d4ea
+}
+.exercise-description{color:var(--muted);margin-bottom:10px;line-height:1.5}
+.exercise-controls{display:flex;gap:12px;justify-content:center}
+.exercise-timer{text-align:center;font-size:1.3rem;font-weight:700;color:#c6d4ea;margin:10px 0}
+
+/* כפתורים */
+.btn-primary,.btn-secondary,.btn-danger,.btn-success{
+  padding:.8rem 1.3rem;border:none;border-radius:10px;font-weight:700;cursor:pointer;min-width:110px
+}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-secondary{background:#2d3b4f;color:#e2e8f0}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+
+/* ניווט תחתון */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;background:var(--surface);
+  border-top:1px solid var(--border);display:flex;justify-content:space-around;
+  padding:.5rem;z-index:999
+}
+.nav-btn{background:none;border:none;padding:.5rem;color:#b9c3d3;flex:1;font-size:.9rem;line-height:1.2;cursor:pointer}
+.nav-btn--active{color:#dbe6ff;font-weight:700}
+
+/* לשוניות */
+.tab-content{display:none}
+.tab-content--active{display:block}
+
+/* הגדרות */
+.settings-group{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;padding:16px}
+.settings-group h3{color:#dbe6ff;margin-bottom:8px;font-size:1.05rem}
+.setting-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.setting-item:last-child{border-bottom:none}
+.setting-item select,.setting-item input[type="range"]{min-width:140px}
+
+/* מודאלים */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;justify-content:center;align-items:center;padding:16px}
+.modal-content{
+  width:min(560px,92vw);background:linear-gradient(180deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 16px 40px rgba(0,0,0,.5)
+}
+.modal-content h3{margin-bottom:12px;color:#dbe6ff}
+.exercise-edit-form .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.exercise-edit-form .form-row.two{flex-direction:row;gap:12px}
+.exercise-edit-form .form-row.two>div{flex:1}
+.exercise-edit-form input,.exercise-edit-form textarea{
+  width:100%;background:#0b1220;border:1px solid var(--border);color:#e6edf3;border-radius:10px;padding:10px;font-size:1rem
+}
+.exercise-edit-form input:focus,.exercise-edit-form textarea:focus{
+  outline:none;border-color:#38557a;box-shadow:0 0 0 3px rgba(31,111,235,.15)
+}
+.edit-buttons{display:flex;gap:12px;justify-content:center;margin-top:6px}
+
+/* מודאל התאמת BPM */
+.bpm-adjust-buttons{display:flex;gap:12px;justify-content:center;margin-top:10px}
+.bpm-adjust-text{color:#c6d4ea;margin-top:4px;text-align:center}
+
+/* התקדמות */
+.progress-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:10px 0}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center;padding:16px}
+.stat-value{font-size:1.6rem;font-weight:800;color:#dbe6ff}
+.stat-label{color:#aab6c5;margin-top:6px}
+.progress-canvas{
+  width:100%;height:220px;background:#0b1220;border:1px solid var(--border);
+  border-radius:12px;margin-top:12px;image-rendering:auto
+}
+
+/* מובייל */
+@media (max-width:768px){
+  .metronome-toggle{width:52px;height:52px}
+  .bpm-display{min-width:84px;font-size:1rem}
+  .exercises-grid{grid-template-columns:1fr}
+  .exercise-edit-form .form-row.two{flex-direction:column}
 }
