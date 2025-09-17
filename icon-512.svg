@@ -1,0 +1,5 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="64" fill="#32808d"/>
+  <text x="256" y="320" text-anchor="middle" font-size="200" fill="white">🪗</text>
+  <text x="256" y="420" text-anchor="middle" font-size="48" fill="white" font-family="Arial">אקורדיון</text>
+</svg>
